@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio - Social Media Style</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f0f2f5;
+            color: #1c1e21;
+            transition: background 0.3s, color 0.3s;
+        }
+        .header {
+            background: #4267b2;
+            color: #fff;
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .header .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            letter-spacing: 3px;
+            text-shadow: 1px 2px 8px #2d4373;
+        }
+        .header nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-size: 1.1rem;
+            transition: opacity 0.2s;
+            position: relative;
+        }
+        .header nav a::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: #fff;
+            transition: width 0.3s;
+            position: absolute;
+            left: 0;
+            bottom: -3px;
+        }
+        .header nav a:hover {
+            opacity: 0.7;
+        }
+        .header nav a:hover::after {
+            width: 100%;
+        }
+        .container {
+            display: flex;
+            max-width: 1100px;
+            margin: 2rem auto;
+            gap: 2rem;
+            transition: filter 0.3s;
+        }
+        .sidebar {
+            flex: 1;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            padding: 2rem 1.5rem;
+            min-width: 250px;
+            position: relative;
+            overflow: hidden;
+            animation: slideInSidebar 1s cubic-bezier(.68,-0.55,.27,1.55);
+        }
+        @keyframes slideInSidebar {
+            from { transform: translateX(-80px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #4267b2;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 16px rgba(66,103,178,0.15);
+            transition: transform 0.3s;
+        }
+        .profile-pic:hover {
+            transform: scale(1.07) rotate(-2deg);
+        }
+        .profile-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+        .profile-bio {
+            color: #555;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+        .profile-links a {
+            display: block;
+            color: #4267b2;
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .profile-links a:hover {
+            text-decoration: underline;
+            background: #e7f0fd;
+            color: #2d4373;
+        }
+        .main-content {
+            flex: 2.5;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            padding: 2rem 2.5rem;
+            animation: fadeInMain 1.2s cubic-bezier(.68,-0.55,.27,1.55);
+        }
+        @keyframes fadeInMain {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .post-box {
+            background: #f5f6fa;
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+            position: relative;
+        }
+        .post-box textarea:focus {
+            background: #e7f0fd;
+        }
+        .post-box button {
+            box-shadow: 0 2px 8px rgba(66,103,178,0.08);
+            transition: background 0.2s, transform 0.2s;
+        }
+        .post-box button:active {
+            transform: scale(0.97);
+        }
+        .post-box textarea {
+            width: 100%;
+            border: none;
+            resize: none;
+            font-size: 1rem;
+            background: transparent;
+            outline: none;
+            transition: background 0.2s;
+        }
+        .post-box button {
+            background: #4267b2;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            float: right;
+            margin-top: 0.5rem;
+        }
+        .post-box button:disabled {
+            background: #b0b7c3;
+            cursor: not-allowed;
+        }
+        .posts {
+            margin-top: 1rem;
+        }
+        .post {
+            background: #f0f2f5;
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: postAppear 0.6s forwards;
+        }
+        @keyframes postAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .post .post-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        .post .post-header img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 0.8rem;
+            box-shadow: 0 2px 8px rgba(66,103,178,0.10);
+        }
+        .post .post-header .name {
+            font-weight: bold;
+        }
+        .post .post-time {
+            color: #888;
+            font-size: 0.9rem;
+            margin-left: 0.5rem;
+        }
+        .post .post-content {
+            margin-top: 0.5rem;
+            font-size: 1.08rem;
+            word-break: break-word;
+        }
+        .post .like-btn {
+            background: none;
+            border: none;
+            color: #4267b2;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: color 0.2s;
+        }
+        .post .like-btn.liked {
+            color: #e0245e;
+        }
+        .post .like-btn:hover {
+            color: #29487d;
+        }
+        .dark-mode {
+            background: #18191a !important;
+            color: #e4e6eb !important;
+        }
+        .dark-mode .header {
+            background: #242526 !important;
+            color: #e4e6eb !important;
+        }
+        .dark-mode .sidebar, .dark-mode .main-content {
+            background: #242526 !important;
+            color: #e4e6eb !important;
+        }
+        .dark-mode .post, .dark-mode .post-box {
+            background: #18191a !important;
+            color: #e4e6eb !important;
+        }
+        .dark-mode .profile-links a {
+            color: #8ab4f8 !important;
+        }
+        .dark-mode .profile-links a:hover {
+            background: #23272f !important;
+            color: #fff !important;
+        }
+        .dark-mode .post .like-btn {
+            color: #8ab4f8 !important;
+        }
+        .dark-mode .post .like-btn.liked {
+            color: #ff6f91 !important;
+        }
+        .dark-toggle {
+            background: #fff;
+            color: #4267b2;
+            border: 1px solid #4267b2;
+            border-radius: 20px;
+            padding: 0.3rem 1.2rem;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-left: 2rem;
+            transition: background 0.2s, color 0.2s;
+        }
+        .dark-toggle.active {
+            background: #4267b2;
+            color: #fff;
+        }
+        
+        @media (max-width: 900px) {
+            .container {
+                flex-direction: column;
+                padding: 0 1rem;
+            }
+            .main-content {
+                padding: 1.2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">MyPortfolio</div>
+        <nav>
+            <a href="#about">About</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+        </nav>
+        <button class="dark-toggle" id="darkToggle" title="Toggle dark mode">🌙 Dark Mode</button>
+    </div>
+    <div class="container">
+        <aside class="sidebar">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile Picture" class="profile-pic">
+            <div class="profile-name">Oluwaseun Alarape</div>
+            <div class="profile-bio">Web Developer | UI/UX Enthusiast | Tech Explorer<br>Passionate about building beautiful and functional web experiences.</div>
+            <div class="profile-links">
+                <a href="mailto:youremail@example.com">Email</a>
+                <a href="https://github.com/yourusername" target="_blank">GitHub</a>
+                <a href="https://linkedin.com/in/yourusername" target="_blank">LinkedIn</a>
+                <a href="#">Download Resume</a>
+            </div>
+        </aside>
+        <main class="main-content">
+            <section class="post-box">
+                <textarea id="postInput" rows="2" placeholder="Share something about your work, skills, or life..."></textarea>
+                <button id="postBtn" disabled>Post</button>
+                <div style="clear: both;"></div>
+            </section>
+            <section class="posts" id="posts">
+                <!-- Posts will appear here -->
+            </section>
+            <section id="about" style="margin-top:2rem;">
+                <h2>About Me</h2>
+                <p>Hello! I'm Oluwaseun Alarape, a passionate web developer with a knack for creating engaging and user-friendly digital experiences. I love working with modern web technologies and am always eager to learn and grow.</p>
+            </section>
+            <section id="projects" style="margin-top:2rem;">
+                <h2>Projects</h2>
+                <ul>
+                    <li><strong>Project A:</strong> A modern portfolio website with interactive features.</li>
+                    <li><strong>Project B:</strong> Social media dashboard for analytics.</li>
+                    <li><strong>Project C:</strong> UI/UX design system for startups.</li>
+                </ul>
+            </section>
+            <section id="contact" style="margin-top:2rem;">
+                <h2>Contact</h2>
+                <p>Feel free to reach out via <a href="mailto:youremail@example.com">email</a> or connect with me on social media!</p>
+            </section>
+        </main>
+    </div>
+    <script>
+        // Enable/disable post button
+        const postInput = document.getElementById('postInput');
+        const postBtn = document.getElementById('postBtn');
+        const postsSection = document.getElementById('posts');
+        const darkToggle = document.getElementById('darkToggle');
+        const body = document.body;
+
+        // Dark mode toggle
+        darkToggle.addEventListener('click', function() {
+            body.classList.toggle('dark-mode');
+            darkToggle.classList.toggle('active');
+            darkToggle.textContent = body.classList.contains('dark-mode') ? '☀️ Light Mode' : '🌙 Dark Mode';
+        });
+
+        postInput.addEventListener('input', function() {
+            postBtn.disabled = postInput.value.trim().length === 0;
+        });
+
+        postBtn.addEventListener('click', function() {
+            const content = postInput.value.trim();
+            if (!content) return;
+            const post = document.createElement('div');
+            post.className = 'post';
+            post.innerHTML = `
+                <div class="post-header">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile Picture">
+                    <span class="name">Oluwaseun Alarape</span>
+                    <span class="post-time">just now</span>
+                </div>
+                <div class="post-content">${content.replace(/</g, '&lt;')}</div>
+                <button class="like-btn" title="Like this post"><span class="like-icon">👍</span> <span class="like-count">0</span></button>
+            `;
+            postsSection.prepend(post);
+            postInput.value = '';
+            postBtn.disabled = true;
+            // Animate post
+            setTimeout(() => post.style.opacity = 1, 10);
+        });
+
+        // Like button interactivity (event delegation)
+        postsSection.addEventListener('click', function(e) {
+            if (e.target.classList.contains('like-btn') || e.target.closest('.like-btn')) {
+                const btn = e.target.closest('.like-btn');
+                const countSpan = btn.querySelector('.like-count');
+                let count = parseInt(countSpan.textContent, 10);
+                if (btn.classList.contains('liked')) {
+                    btn.classList.remove('liked');
+                    count--;
+                } else {
+                    btn.classList.add('liked');
+                    count++;
+                }
+                countSpan.textContent = count;
+            }
+        });
+
+        // Animate posts on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.post').forEach((post, i) => {
+                setTimeout(() => post.style.opacity = 1, 100 + i * 80);
+            });
+        });
+    </script>
+</body>
+</html>
